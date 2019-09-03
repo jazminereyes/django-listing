@@ -1,0 +1,114 @@
+{% extends 'layouts/base.html' %} 
+{% load static %} 
+
+{% block content %}
+<div class="hero-wrap hero-bread" style="background-image: url({% static 'img/inquiry-header.jpg' %});">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <p class="breadcrumbs">
+                    <span class="mr-2">
+                        <a href="{% url 'index' %}">Home</a>
+                    </span>
+                    <span>Inquiries</span>
+                </p>
+                <h1 class="mb-0 bread">Inquiries</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-9"></div>
+            <div class="col-md-3">
+                <form method="POST" action="{% url 'inquiry' %}" class="search-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <span class="icon ion-ios-search"></span>
+                        <input type="text" class="form-control" name="inquiry" placeholder="Search Inquiry...">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12 text-right">
+                {% if user.is_authenticated %}
+                <a href="{% url 'inquiry_new' %}" class="btn btn-primary">
+                    <span class="icon-add mr-2"></span>Post an Inquiry</a>
+                {% endif %}
+            </div>
+        </div>
+        {% if text %}
+        <div class="row mt-5">
+            <div class="col-md-12 text-center">
+                <h3>Displaying search results for '{{ text }}'</h3>
+            </div>
+        </div>
+        {% endif %} 
+        {% if result.count == 0 %}
+        <div class="row mt-3">
+            <div class="col-md-12 text-center">
+                <p>No results found.</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col-md-12 ftco-animate">
+                <div class="cart-list">
+                    <table class="table">
+                        <thead class="thead-primary" style="background-color: #D4B297; border: 3px solid white;">
+                            <tr class="text-center text-white">
+                                <th style="width: 60%;">Inquiry List</th>
+                                <th>&nbsp;</th>
+                                <th style="width: 20%;">User</th>
+                                <th style="width: 10%;">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for inquiry in inquiries %}
+                            <tr class="text-center">
+                                <td class="product-name">
+                                    <h3>{{ inquiry.title }}</h3>
+                                    <p>{{ inquiry.question }}</p>
+                                </td>
+                                <td></td>
+                                <td>{{ inquiry.author }}</td>
+                                <td>
+                                    <a href="/inquiries/{{ inquiry.id }}">View</a>
+                                </td>
+                            </tr>
+                            <!-- END TR-->
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="row mt-5">
+            <div class="col text-center">
+                <div class="block-27">
+                    <ul>
+                        <li>
+                            {% if inquiries.has_previous %}
+                            <a href="?page={{ inquiries.previous_page_number }}">&lt;</a>
+                            {% endif %}
+                        </li>
+                        <li class="active">
+                            <span>{{ inquiries.number }}</span>
+                        </li>
+                        <li>
+                            {% if inquiries.has_next %}
+                            <a href="?page={{ inquiries.next_page_number }}">&gt;</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        
+        </div>
+    </div>
+</section>
+{% endblock %}

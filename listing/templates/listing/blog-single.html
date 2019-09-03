@@ -1,0 +1,59 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="hero-wrap hero-bread" style="background-image: url({% static 'img/blog-header.jpg' %});">
+  <div class="container">
+    <div class="row no-gutters slider-text align-items-center justify-content-center">
+      <div class="col-md-9 ftco-animate text-center">
+        <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'index' %}">Home</a></span> <span>Blog</span></p>
+        <h1 class="mb-0 bread">Blog</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="ftco-section ftco-degree-bg">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 ftco-animate">
+        <h2 class="mb-3">{{ blog_single.title }}</h2>
+        {% if user.is_authenticated and user == blog_single.author %}
+          <a href="/blog/update/{{ blog_single.id }}" class="btn btn-primary"><span class="icon-edit mr-2"></span>Edit</a>
+          <a href="/blog/delete/{{ blog_single.id }}" class="btn btn-primary"><span class="icon-trash mr-2"></span>Delete</a>
+        {% endif %}
+        <p class="mt-3">
+          <img src="{{ blog_single.photo.url }}" alt="" class="img-fluid">
+        </p>
+        <p>{{ blog_single.content|linebreaksbr }}</p>
+      </div> <!-- .col-md-8 -->
+      <div class="col-lg-4 sidebar ftco-animate">
+        <div class="sidebar-box">
+          <form method="POST" action="{% url 'blog' %}" class="search-form">
+            <div class="form-group">
+              <span class="icon ion-ios-search"></span>
+              <input type="text" class="form-control" name="search" placeholder="Search Blog...">
+            </div>
+          </form>
+        </div>
+        <div class="sidebar-box ftco-animate">
+          <h3 class="heading">Recent Blog</h3>
+          {% for latest in recent %}
+          <div class="block-21 mb-4 d-flex">
+            <a class="blog-img mr-4" style="background-image: url({{ latest.photo.url }});"></a>
+            <div class="text">
+              <h3 class="heading-1"><a href="/blog/{{ latest.id }}">{{ latest.title }}</a></h3>
+              <div class="meta">
+                <div><a href="#"><span class="icon-calendar mr-2"></span> {{ latest.created_at|date:"m-d-Y" }}</a></div>
+                <div><a href="#"><span class="icon-person mr-2"></span> {{ latest.author }}</a></div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section> <!-- .section -->
+{% endblock %}

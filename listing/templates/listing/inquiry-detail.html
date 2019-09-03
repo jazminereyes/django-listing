@@ -1,0 +1,75 @@
+{% extends 'layouts/base.html' %} 
+{% load static %} 
+
+{% block content %}
+<div class="hero-wrap hero-bread" style="background-image: url({% static 'img/inquiry-header.jpg' %});">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <p class="breadcrumbs">
+                    <span class="mr-2">
+                        <a href="{% url 'index' %}">Home</a>
+                    </span>
+                    <span>Inquiries</span>
+                </p>
+                <h1 class="mb-0 bread">Post an Inquiry</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-lg-8 ftco-animate">
+                <form method="POST" class="info-form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h3 class="mb-4 info-heading">Post an Inquiry</h3>
+                    <div class="row align-items-end">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="title">Title</label>
+                                        {% if form.title.value %}
+                                        <input type="text" class="form-control" name="title" value="{{ form.title.value }}"> 
+                                        {% else %}
+                                        <input type="text" class="form-control" name="title"> 
+                                        {% endif %}
+                                    </div>
+                                    {{ form.title.errors }}
+                                </div>
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="content">Question</label>
+                                        {% if form.question.value %}
+                                        <textarea name="question" class="form-control" cols="30" rows="10">{{ form.question.value }}</textarea> 
+                                        {% else %}
+                                        <textarea name="question" class="form-control" cols="30" rows="10"></textarea> 
+                                        {% endif %} 
+                                        {{ form.question.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="submit" value="Post" class="submit px-3 btn btn-primary">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END -->
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- .section -->
+{% endblock %}

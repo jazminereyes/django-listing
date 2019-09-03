@@ -1,0 +1,34 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="hero-wrap hero-bread" style="background-image: url({% static 'img/shop-header.jpg' %});">
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-center justify-content-center">
+        <div class="col-md-9 ftco-animate text-center">
+            <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'index' %}">Home</a></span> <span class="mr-2"><a href="{% url 'shop' %}">Product</a></span> <span>{{ product.product_name }}</span></p>
+          <h1 class="mb-0 bread">{{ product.product_name }}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="ftco-section">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-6 mb-5 ftco-animate">
+                  <a href="{{ product.product_photo.url }}" class="image-popup"><img src="{{ product.product_photo.url }}" class="img-fluid" alt="Colorlib Template"></a>
+              </div>
+              <div class="col-lg-6 product-details pl-md-5 ftco-animate">
+                  <h3>{{ product.product_name }}</h3>
+                  <p class="price"><span>&#8369;{{ product.product_price|floatformat:2 }}</span></p>
+                  <p>{{ product.product_description|linebreaksbr }}</p>
+                  <h6><span class="icon-person mr-2"></span>Seller: {{ product.user }}</h6>
+                  {% if user.is_authenticated and user == product.user %}
+                    <p class="mt-5"><a href="/products/update/{{ product.id }}" class="btn btn-black py-3 px-5 mr-3">Edit Product</a><a href="/products/delete/{{ product.id }}" class="btn btn-danger py-3 px-5">Delete Product</a></p>
+                {% endif %}
+              </div>
+          </div>
+      </div>
+  </section>
+{% endblock %}

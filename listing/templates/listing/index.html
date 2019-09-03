@@ -1,0 +1,45 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="hero-wrap hero-bread" style="background-image: url('static/img/home-header.jpg');">
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-center justify-content-center">
+        <div class="col-md-9 ftco-animate text-center">
+          <h1 class="mb-0 bread">Your Skincare Needs</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="ftco-section">
+        <div class="container">
+          <div class="row ftco-services">
+            <div class="col-md-4 ftco-animate text-center">
+              <div class="media services">
+                <img src="{% static 'img/icon-01.png' %}" alt="">
+                <div class="media-body mt-4">
+                  <h3 class="heading">SELL YOUR PRODUCT</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 ftco-animate text-center">
+              <div class="media services">
+                <img src="{% static 'img/icon-04.png' %}" alt="">
+                <div class="media-body mt-4">
+                  <h3 class="heading">POST AN INQUIRY</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 ftco-animate text-center">
+              <div class="media services">
+                <img src="{% static 'img/icon-03.png' %}" alt="">
+                <div class="media-body mt-4">
+                  <h3 class="heading">SHARE YOUR STORY IN OUR BLOG</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section> <!-- .section -->
+{% endblock %}

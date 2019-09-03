@@ -1,0 +1,106 @@
+{% extends 'layouts/base.html' %} 
+{% load static %} 
+
+{% block content %}
+<div class="hero-wrap hero-bread" style="background-image: url({% static 'img/shop-header.jpg' %});">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <p class="breadcrumbs">
+                    <span class="mr-2">
+                        <a href="{% url 'index' %}">Home</a>
+                    </span>
+                    <span>Products</span>
+                </p>
+                <h1 class="mb-0 bread">Add New Product</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-lg-8 ftco-animate">
+                <form method="POST" class="info-form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h3 class="mb-4 info-heading">Add New Product</h3>
+                    <div class="row align-items-end">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="title">Product Name</label>
+                                        {% if form.product_name.value %}
+                                        <input type="text" class="form-control" name="product_name" value="{{ form.product_name.value }}"> 
+                                        {% else %}
+                                        <input type="text" class="form-control" name="product_name"> 
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="photo">Product Photo</label>
+                                        <input type="file" class="form-control" name="product_photo">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form.product_name.errors }}
+                                </div>
+                                <div class="col-md-6">
+                                    {% if form.product_photo.value %}
+                                    <small>{{ form.product_photo.value }}</small>
+                                    {% endif %} 
+                                    {{ form.product_photo.errors }}
+                                </div>
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="photo">Product Price</label>
+                                        {% if form.product_price.value %}
+                                        <input type="number" class="form-control" name="product_price" min="0" value="{{ form.product_price.value }}"> 
+                                        {% else %}
+                                        <input type="number" class="form-control" name="product_price" min="0"> 
+                                        {% endif %} 
+                                        {{ form.product_price.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="content">Product Description</label>
+                                        {% if form.product_description.value %}
+                                        <textarea name="product_description" class="form-control" cols="30" rows="10">{{ form.product_description.value }}</textarea> 
+                                        {% else %}
+                                        <textarea name="product_description" class="form-control" cols="30" rows="10"></textarea> 
+                                        {% endif %} 
+                                        {{ form.product_description.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="submit" value="Save" class="submit px-3 btn btn-primary">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END -->
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- .section -->
+{% endblock %}
